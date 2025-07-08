@@ -12,6 +12,8 @@ namespace win_util_tool
         const int  WM_HOTKEY   = 0x0312;
         const uint MOD_CONTROL = 0x0002;
         const uint MOD_SHIFT   = 0x0004;
+        const uint MOD_NOREPEAT = 0x4000;
+
 
         [DllImport("user32.dll")] extern static int RegisterHotKey(IntPtr hWnd, int id, uint modKey, uint key);
         [DllImport("user32.dll")] extern static int UnregisterHotKey(IntPtr HWnd, int id);
@@ -30,18 +32,9 @@ namespace win_util_tool
             this.Hide();
 
             // Ctrl+Shift+S でWndProcが呼ばれる。
-            if (RegisterHotKey(this.Handle, HOTKEY_ID, MOD_CONTROL | MOD_SHIFT, (uint)Keys.S) == 0) {
+            if (RegisterHotKey(this.Handle, HOTKEY_ID, MOD_CONTROL | MOD_SHIFT | MOD_NOREPEAT, (uint)Keys.C) == 0) {
                 MessageBox.Show("ホットキーの取得に失敗しました。","エラー",MessageBoxButtons.OK,MessageBoxIcon.Error);
-                this.Dispose();
-            }
-        }
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                var cp = base.CreateParams;
-                cp.ExStyle |= 0x08000000; // WS_EX_NOACTIVATE
-                return cp;
+                Application.Exit();
             }
         }
         protected override void Dispose(bool disposing)
@@ -60,12 +53,13 @@ namespace win_util_tool
                     SendKeys.SendWait("^{c}");
                     await Task.Delay(300);
 
-                    new Form1(Clipboard.GetText()).Show();
+                    var form = new Form1(Clipboard.GetText());
+                    form.Show();
+                    form.Activate();
                 }));
             }
             base.WndProc(ref m);
         }
-
     }
     internal static class Program
     {
