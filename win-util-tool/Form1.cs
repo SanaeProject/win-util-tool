@@ -16,5 +16,9 @@ namespace win_util_tool
         {
             InitializeComponent();
         }
+        public Form1(string text):this(){
+
+
+        }
     }
 }
