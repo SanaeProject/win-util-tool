@@ -32,7 +32,7 @@
             this.search = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.result = new System.Windows.Forms.TextBox();
-            this.webResult = new System.Windows.Forms.WebBrowser();
+            this.webResult = new System.Windows.Forms.TextBox();
             this.searchLink = new System.Windows.Forms.LinkLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -89,6 +89,7 @@
             this.webResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webResult.Location = new System.Drawing.Point(0, 0);
             this.webResult.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webResult.Multiline = true;
             this.webResult.Name = "webResult";
             this.webResult.Size = new System.Drawing.Size(336, 353);
             this.webResult.TabIndex = 0;
@@ -125,6 +126,7 @@
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -137,7 +139,7 @@
         private System.Windows.Forms.TextBox search;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TextBox result;
-        private System.Windows.Forms.WebBrowser webResult;
+        private System.Windows.Forms.TextBox webResult;
         private System.Windows.Forms.LinkLabel searchLink;
         private System.Windows.Forms.Timer timer1;
     }

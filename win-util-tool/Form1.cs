@@ -5,35 +5,30 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Security;
 using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OpenQA.Selenium.Chrome;
+
 
 namespace win_util_tool
 {
     public partial class Form1 : Form
     {
-        private readonly Translator translator;
-        private readonly Wiktionary wikitionary = new Wiktionary();
+        private static readonly HttpClient client      = new HttpClient();
+        private static readonly Translator translator  = new Translator(client);
+        // private static readonly Wiktionary wikitionary = new Wiktionary(client);
         private string searchUrl = "https://www.google.com/search?q=";
 
         public Form1(string text)
         {
             InitializeComponent();
-
-            try
-            {
-                translator = new Translator();
-            }
-            catch (Exception e)
-            {
-                translator = null;
-                MessageBox.Show(e.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
-            }
 
             this.Shown += (s,e)=> { 
                 search.Text = text; 
@@ -42,49 +37,27 @@ namespace win_util_tool
             };
         }
 
-        public async void render(string text)
+        public void render(string text)
         {
-            string translated = null;
-            string html = null;
-            searchUrl = "https://www.google.com/search?q=" + Uri.EscapeDataString(text);
-
-            if (text.Length < 100)
+            this.Invoke(new Action(() =>
             {
-                try
+                string translated = string.Empty;
+
+                if (text.Length < 100 && Translator.isValid)
+                    translated = translator.TranslateAsync(text).Result;
+
+                if (!result.IsDisposed && !result.Disposing && translated != string.Empty)
+                    result.Text = translated;
+
+                string html = GoogleWithWiki.search(text).Result;
+                string plainText = Regex.Replace(html, "<.*?>", string.Empty);
+                plainText = System.Net.WebUtility.HtmlDecode(plainText);
+
+                if (!webResult.IsDisposed && !webResult.Disposing)
                 {
-                    translated = await translator.TranslateAsync(text);
+                    webResult.Text = plainText;
                 }
-                catch (Exception ex)
-                {
-                    translated = "[翻訳失敗]";
-                }
-            }
-
-            try
-            {
-                html = await wikitionary.search(text);
-            }
-            catch (Exception ex)
-            {
-                html = "<html><body>検索失敗</body></html>";
-            }
-
-            if (result != null && !result.IsDisposed && result.IsHandleCreated)
-            {
-                result.Invoke((MethodInvoker)(() =>
-                {
-                    if (translated != null)
-                        result.Text = translated;
-                }));
-            }
-
-            if (webResult != null && !webResult.IsDisposed && webResult.IsHandleCreated)
-            {
-                webResult.Invoke((MethodInvoker)(() =>
-                {
-                    webResult.DocumentText = html;
-                }));
-            }
+            }));
         }
 
         private void search_TextChanged(object sender, EventArgs e)
@@ -113,7 +86,16 @@ namespace win_util_tool
             if (e.KeyCode == Keys.T)
             {
                 Invoke((MethodInvoker)(async () => {
-                    result.Text = await translator.TranslateAsync(search.Text);
+                    if (!Translator.isValid)
+                    {
+                        MessageBox.Show("翻訳APIキーが設定されていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                        
+                    string translated = await translator.TranslateAsync(search.Text);
+
+                    if (!result.IsDisposed && !result.Disposing)
+                        result.Text = translated;
                 }));
             }
             else if (e.KeyCode == Keys.Enter)
@@ -122,17 +104,164 @@ namespace win_util_tool
                 System.Diagnostics.Process.Start(this.searchUrl);
                 this.Close();
             }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                // Escキーでアプリケーションを終了
+                Application.Exit();
+            }
         }
     }
-    public class Wiktionary {
-        private readonly HttpClient httpClient = new HttpClient();
 
-        public Wiktionary() {}
+    public static class Browser
+    {
+        private static OpenQA.Selenium.IWebDriver driver = CreateDriver();
+        private static readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+
+        private static OpenQA.Selenium.IWebDriver CreateDriver()
+        {
+            var service = ChromeDriverService.CreateDefaultService();
+            service.HideCommandPromptWindow = true;
+
+            var options = new ChromeOptions();
+            options.AddArgument("--headless");
+            options.AddArgument("--disable-gpu");
+            options.AddArgument("--no-sandbox");
+
+            options.AddArgument("--disable-blink-features=AutomationControlled");
+            options.AddExcludedArgument("enable-automation");
+            options.AddArgument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
+
+            return new ChromeDriver(service,options);
+        }
+
+        public static string GetHtml(string url)
+        {
+            driver.Navigate().GoToUrl(url);
+            return driver.PageSource;
+        }
+
+        public static async Task<string> GetHtmlWithWait(string url, int waitTime = 3000)
+        {
+            await semaphore.WaitAsync();
+
+            try
+            {
+                driver.Navigate().GoToUrl(url);
+                await Task.Delay(waitTime);
+                return driver.PageSource;
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }
+
+        public static async Task<string> GetHtmlWithWait(string url, string xpath, int maxTry = 8)
+        {
+            await semaphore.WaitAsync();
+
+            try
+            {
+                driver.Navigate().GoToUrl(url);
+
+                OpenQA.Selenium.IWebElement element = null;
+
+                for (int i = 0; i < maxTry; i++)
+                {
+                    try
+                    {
+                        element = driver.FindElement(OpenQA.Selenium.By.XPath(xpath));
+                        if (element != null)
+                            break;
+                    }
+                    catch (OpenQA.Selenium.NoSuchElementException){}
+
+                    await Task.Delay(1000);
+                }
+
+                if (element == null)
+                    throw new Exception($"指定されたXPath '{xpath}' が {maxTry} 回の待機後にも見つかりませんでした。");
+
+                return element.GetAttribute("outerHTML");
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }
+
+        public static async Task<string> GetHtmlsWithWait(string url, string xpath, int eleCount = 3,int maxTry = 8)
+        {
+            await semaphore.WaitAsync();
+
+            try
+            {
+                driver.Navigate().GoToUrl(url);
+
+                IReadOnlyCollection<OpenQA.Selenium.IWebElement> elements = null;
+
+                for (int i = 0; i < maxTry; i++)
+                {
+                    try
+                    {
+                        elements = driver.FindElements(OpenQA.Selenium.By.XPath(xpath));
+                        if (elements != null && elements.Count > 0)
+                            break;
+                    }
+                    catch (OpenQA.Selenium.NoSuchElementException) { }
+
+                    await Task.Delay(1000);
+                }
+
+                if (elements == null || elements.Count == 0)
+                    throw new Exception($"指定されたXPath '{xpath}' が {maxTry} 回の待機後にも見つかりませんでした。");
+
+                return string.Join("\n\n", elements
+                    .Take(eleCount)
+                    .Select(e => e.GetAttribute("outerHTML")));
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }
+
+        public static void Dispose()
+        {
+            driver?.Quit();
+            driver = null;
+        }
+    }
+    public class GoogleWithWiki
+    {
+        public static async Task<string> search(string text)
+        {
+            try
+            {
+                return await Browser.GetHtmlsWithWait("https://search.yahoo.co.jp/search?p=" + Uri.EscapeDataString(text) + " site:wikipedia.org", "//*[contains(@class, 'sw-Card__summary')]", 3, 3);
+            }
+            catch (HttpRequestException ex)
+            {
+                return "HttpRequestException: " + ex.Message;
+            }
+            catch (Exception ex)
+            {
+                return "予期せぬエラー: " + ex.Message;
+            }
+        }
+    }
+
+    public class Wiktionary {
+        readonly HttpClient client;
+
+        public Wiktionary(HttpClient client) {
+            this.client = client;
+        }
 
         public async Task<string> search(string text) {
             try
             {
-                string html = await httpClient.GetStringAsync("https://" + Translator.DetectLang(text).ToLower() + ".wiktionary.org/wiki/" + text);
+                string html = await client.GetStringAsync("https://" + Translator.DetectLang(text).ToLower() + ".wiktionary.org/wiki/" + text);
 
                 var doc = new HtmlAgilityPack.HtmlDocument();
                 doc.LoadHtml(html);
@@ -142,30 +271,30 @@ namespace win_util_tool
 
                 return extractedHtml;
             }
-            catch (Exception ex)
+            catch (HttpRequestException ex)
             {
-                return ex.Message;
+                return "HttpRequestException: "+ex.Message;
+            }
+            catch (Exception ex) {
+                return "予期せぬエラー: " + ex.Message;
             }
         }
     }
     public class Translator
     {
-        private readonly string apiKey;
-        private static readonly string endpoint = "https://api-free.deepl.com/v2/translate";
+        readonly HttpClient client;
+        protected static readonly string apiKey   = Environment.GetEnvironmentVariable("DEEPL_API_KEY");
+        protected static readonly string endpoint = "https://api-free.deepl.com/v2/translate";
 
-        public Translator()
-        {
-            try
+        public static bool isValid {
+            get
             {
-                this.apiKey = Environment.GetEnvironmentVariable("DEEPL_API_KEY");
+                return apiKey != null;
+            }
+        }
 
-                if (string.IsNullOrEmpty(apiKey))
-                    throw new Exception("APIキーが設定されていません。");
-            }
-            catch (Exception e)
-            {
-                throw new Exception("DeepL APIキーの取得に失敗しました。\n" + e);
-            }
+        public Translator(HttpClient client) {
+            this.client = client;
         }
 
         public static string DetectLang(string text)
@@ -185,9 +314,10 @@ namespace win_util_tool
 
         public async Task<string> TranslateAsync(string text)
         {
-            string targetLang = DetectLang(text) == "JA" ? "EN" : "JA"; // 翻訳元が日本語のとき英語へ、英語のときは日本語へ
+            if (apiKey == null)
+                throw new UnauthorizedAccessException("APIキーが設定されていません。");
 
-            var client = new HttpClient();
+            string targetLang = DetectLang(text) == "JA" ? "EN" : "JA"; // 翻訳元が日本語のとき英語へ、英語のときは日本語
             var content = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("auth_key", apiKey),
@@ -195,14 +325,30 @@ namespace win_util_tool
                 new KeyValuePair<string, string>("target_lang", targetLang)
             });
 
-            var response = await client.PostAsync(endpoint, content);
-            var json = await response.Content.ReadAsStringAsync();
+            string translated = null;
+            try
+            {
+                var response = await client.PostAsync(endpoint, content);
+                var json = await response.Content.ReadAsStringAsync();
 
-            var doc = JsonDocument.Parse(json);
-            var translated = doc.RootElement
-                .GetProperty("translations")[0]
-                .GetProperty("text")
-                .GetString();
+                var doc = JsonDocument.Parse(json);
+                translated = doc.RootElement
+                    .GetProperty("translations")[0]
+                    .GetProperty("text")
+                    .GetString();
+            }
+            catch (HttpRequestException ex)
+            {
+                return "HTTPリクエストエラー: " + ex.Message;
+            }
+            catch (JsonException ex)
+            {
+                return "JSON解析エラー: " + ex.Message;
+            }
+            catch(Exception ex)
+            {
+                return "予期せぬエラー: " + ex.Message;
+            }
 
             return translated;
         }

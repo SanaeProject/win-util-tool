@@ -36,12 +36,18 @@ namespace win_util_tool
                 MessageBox.Show("ホットキーの取得に失敗しました。","エラー",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 Application.Exit();
             }
+
+            if(!Translator.isValid)
+            {
+                MessageBox.Show("翻訳APIの設定が無効です。設定を確認してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
                 UnregisterHotKey(this.Handle, HOTKEY_ID);
-
+            
+            Browser.Dispose();
             base.Dispose(disposing);
         }
 
