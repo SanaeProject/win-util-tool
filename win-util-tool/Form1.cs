@@ -39,6 +39,7 @@ namespace win_util_tool
 
         public void render(string text)
         {
+            searchUrl = "https://www.google.com/search?q=" + Uri.EscapeDataString(text);
             this.Invoke(new Action(() =>
             {
                 string translated = string.Empty;
@@ -50,7 +51,8 @@ namespace win_util_tool
                     result.Text = translated;
 
                 string html = GoogleWithWiki.search(text).Result;
-                string plainText = Regex.Replace(html, "<.*?>", string.Empty);
+                string plainText = Regex.Replace(html, "[。.]", "\n");
+                plainText = Regex.Replace(plainText, "<.*?>", string.Empty);
                 plainText = System.Net.WebUtility.HtmlDecode(plainText);
 
                 if (!webResult.IsDisposed && !webResult.Disposing)
@@ -98,13 +100,18 @@ namespace win_util_tool
                         result.Text = translated;
                 }));
             }
-            else if (e.KeyCode == Keys.Enter)
+            else if(e.Shift && e.KeyCode == Keys.Enter)
             {
-                // Enterキーで検索リンクを開く
+                // Shift+Enterキーで検索リンクを開く
                 System.Diagnostics.Process.Start(this.searchUrl);
                 this.Close();
             }
-            else if (e.KeyCode == Keys.Escape)
+            else if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Escape)
+            {
+                // Enterキーで終了
+                this.Close();
+            }
+            else if (e.KeyCode == Keys.Delete)
             {
                 // Escキーでアプリケーションを終了
                 Application.Exit();
@@ -238,7 +245,7 @@ namespace win_util_tool
         {
             try
             {
-                return await Browser.GetHtmlsWithWait("https://search.yahoo.co.jp/search?p=" + Uri.EscapeDataString(text) + " site:wikipedia.org", "//*[contains(@class, 'sw-Card__summary')]", 3, 3);
+                return await Browser.GetHtmlsWithWait("https://search.yahoo.co.jp/search?p=" + Uri.EscapeDataString(text) + " site:wikipedia.org", "//*[contains(@class, 'sw-Card__summary')]", 5, 3);
             }
             catch (HttpRequestException ex)
             {

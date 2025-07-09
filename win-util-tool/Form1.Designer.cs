@@ -91,6 +91,7 @@
             this.webResult.MinimumSize = new System.Drawing.Size(20, 20);
             this.webResult.Multiline = true;
             this.webResult.Name = "webResult";
+            this.webResult.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.webResult.Size = new System.Drawing.Size(336, 353);
             this.webResult.TabIndex = 0;
             // 
