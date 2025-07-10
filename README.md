@@ -63,7 +63,7 @@ Windows環境で「選択したテキスト」に対して瞬時に操作でき�
 ## 備考
 
 - このツールは .NET Framework 4.7.2 対応  
-- 使用ライブラリ一覧は [`packages.config`](./packages.config) を参照してください
+- 使用ライブラリ一覧は [`packages.config`](./win-util-tool/packages.config) を参照してください
 - 初回実行時は `NuGet パッケージの復元` を行ってください
 
 ```bash
