@@ -67,20 +67,22 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.webResult);
-            this.splitContainer1.Size = new System.Drawing.Size(508, 353);
-            this.splitContainer1.SplitterDistance = 168;
+            this.splitContainer1.Size = new System.Drawing.Size(508, 356);
+            this.splitContainer1.SplitterDistance = 229;
             this.splitContainer1.TabIndex = 1;
             this.splitContainer1.TabStop = false;
             // 
             // result
             // 
+            this.result.BackColor = System.Drawing.SystemColors.Window;
             this.result.Dock = System.Windows.Forms.DockStyle.Fill;
             this.result.Font = new System.Drawing.Font("MS UI Gothic", 14F);
             this.result.Location = new System.Drawing.Point(0, 0);
             this.result.Multiline = true;
             this.result.Name = "result";
             this.result.ReadOnly = true;
-            this.result.Size = new System.Drawing.Size(168, 353);
+            this.result.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.result.Size = new System.Drawing.Size(229, 356);
             this.result.TabIndex = 0;
             this.result.KeyDown += new System.Windows.Forms.KeyEventHandler(this.result_KeyDown);
             // 
@@ -91,17 +93,17 @@
             this.webResult.MinimumSize = new System.Drawing.Size(20, 20);
             this.webResult.Multiline = true;
             this.webResult.Name = "webResult";
-            this.webResult.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.webResult.Size = new System.Drawing.Size(336, 353);
+            this.webResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.webResult.Size = new System.Drawing.Size(275, 356);
             this.webResult.TabIndex = 0;
             // 
             // searchLink
             // 
             this.searchLink.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.searchLink.Font = new System.Drawing.Font("MS UI Gothic", 13F);
-            this.searchLink.Location = new System.Drawing.Point(0, 418);
+            this.searchLink.Location = new System.Drawing.Point(0, 421);
             this.searchLink.Name = "searchLink";
-            this.searchLink.Size = new System.Drawing.Size(508, 32);
+            this.searchLink.Size = new System.Drawing.Size(508, 29);
             this.searchLink.TabIndex = 2;
             this.searchLink.TabStop = true;
             this.searchLink.Text = "Google検索";

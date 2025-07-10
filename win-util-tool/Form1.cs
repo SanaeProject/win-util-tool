@@ -46,12 +46,16 @@ namespace win_util_tool
 
                 if (text.Length < 100 && Translator.isValid)
                     translated = await translator.TranslateAsync(text);
+                else if(text.Length > 100 && Translator.isValid)
+                    translated = "100文字を超えているため翻訳を中止しました。\r\n続行するには\"T\"を押してください。";
+                else
+                    translated = "翻訳APIキーが設定されていません。\r\nシステム環境変数に\"DEEPL_API_KEY\"を設定してください。";
 
                 if (!result.IsDisposed && !result.Disposing && translated != string.Empty)
                     result.Text = translated;
 
                 string html = await GoogleWithWiki.search(text);
-                string plainText = Regex.Replace(html, "[。.]", "\n");
+                string plainText = Regex.Replace(html, "<br.?>", "\r\n");
                 plainText = Regex.Replace(plainText, "<.*?>", string.Empty);
                 plainText = System.Net.WebUtility.HtmlDecode(plainText);
 
