@@ -21,7 +21,7 @@ namespace win_util_tool
 {
     public partial class Form1 : Form
     {
-        private static readonly HttpClient client      = new HttpClient();
+        public static readonly HttpClient client      = new HttpClient();
         private static readonly Translator translator  = new Translator(client);
         // private static readonly Wiktionary wikitionary = new Wiktionary(client);
         private string searchUrl = "https://www.google.com/search?q=";
@@ -36,11 +36,7 @@ namespace win_util_tool
                 render(text); 
             };
 
-            this.FormClosing += (s, e) =>
-            {
-                // browserのドライバは呼び出し元のHotKeyFormでDisposeするため、ここでは呼び出さない。
-                client.Dispose();
-            };
+            // client,browserのドライバは呼び出し元のHotKeyFormでDisposeするため、ここでは呼び出さない。
         }
 
         public void render(string text)

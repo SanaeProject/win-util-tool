@@ -48,6 +48,7 @@ namespace win_util_tool
                 UnregisterHotKey(this.Handle, HOTKEY_ID);
             
             Browser.Dispose();
+            Form1.client.Dispose();
             base.Dispose(disposing);
         }
 
