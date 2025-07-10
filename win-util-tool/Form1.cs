@@ -39,7 +39,7 @@ namespace win_util_tool
             this.FormClosing += (s, e) =>
             {
                 // browserのドライバは呼び出し元のHotKeyFormでDisposeするため、ここでは呼び出さない。
-                client.Dispose();
+                client?.Dispose();
             };
         }
 
