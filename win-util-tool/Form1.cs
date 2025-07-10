@@ -35,6 +35,12 @@ namespace win_util_tool
                 result.Select(); 
                 render(text); 
             };
+
+            this.FormClosing += (s, e) =>
+            {
+                // browserのドライバは呼び出し元のHotKeyFormでDisposeするため、ここでは呼び出さない。
+                client?.Dispose();
+            };
         }
 
         public void render(string text)
@@ -91,6 +97,7 @@ namespace win_util_tool
         {
             if (e.KeyCode == Keys.T)
             {
+                // Tキーで翻訳を実行
                 Invoke((MethodInvoker)(async () => {
                     if (!Translator.isValid)
                     {
@@ -104,15 +111,15 @@ namespace win_util_tool
                         result.Text = translated;
                 }));
             }
-            else if(e.Shift && e.KeyCode == Keys.Enter)
+            else if((e.Shift && e.KeyCode == Keys.Enter) || e.KeyCode == Keys.Escape)
             {
-                // Shift+Enterキーで検索リンクを開く
-                System.Diagnostics.Process.Start(this.searchUrl);
+                // Shift+Enter または Escキーでアプリケーションを終了
                 this.Close();
             }
-            else if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Escape)
+            else if (e.KeyCode == Keys.Enter)
             {
-                // Enterキーで終了
+                // EnterキーでGoogle検索を開く
+                System.Diagnostics.Process.Start(this.searchUrl);
                 this.Close();
             }
             else if (e.KeyCode == Keys.Delete)
@@ -201,7 +208,7 @@ namespace win_util_tool
             }
         }
 
-        public static async Task<string> GetHtmlsWithWait(string url, string xpath, int eleCount = 3,int maxTry = 8)
+        public static async Task<string> GetHtmlsWithWait(string url, string xpath, int eleCount = 3,int maxTry = 8,string suffix = "\r\n\r\n")
         {
             await semaphore.WaitAsync();
 
@@ -227,7 +234,7 @@ namespace win_util_tool
                 if (elements == null || elements.Count == 0)
                     throw new Exception($"指定されたXPath '{xpath}' が {maxTry} 回の待機後にも見つかりませんでした。");
 
-                return string.Join("\n\n", elements
+                return string.Join(suffix, elements
                     .Take(eleCount)
                     .Select(e => e.GetAttribute("outerHTML")));
             }
@@ -243,7 +250,7 @@ namespace win_util_tool
             driver = null;
         }
     }
-    public class GoogleWithWiki
+    public static class GoogleWithWiki
     {
         public static async Task<string> search(string text)
         {
