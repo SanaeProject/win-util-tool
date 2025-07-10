@@ -36,7 +36,15 @@ namespace win_util_tool
                 render(text); 
             };
 
+<<<<<<< HEAD
             // client,browserのドライバは呼び出し元のHotKeyFormでDisposeするため、ここでは呼び出さない。
+=======
+            this.FormClosing += (s, e) =>
+            {
+                // browserのドライバは呼び出し元のHotKeyFormでDisposeするため、ここでは呼び出さない。
+                client?.Dispose();
+            };
+>>>>>>> 2fb82c8ef56f066f9bd3fb5fdc6cb74c2eb10da9
         }
 
         public void render(string text)
