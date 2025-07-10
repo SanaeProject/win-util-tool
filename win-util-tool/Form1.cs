@@ -40,17 +40,17 @@ namespace win_util_tool
         public void render(string text)
         {
             searchUrl = "https://www.google.com/search?q=" + Uri.EscapeDataString(text);
-            this.Invoke(new Action(() =>
+            this.Invoke((MethodInvoker)(async () =>
             {
                 string translated = string.Empty;
 
                 if (text.Length < 100 && Translator.isValid)
-                    translated = translator.TranslateAsync(text).Result;
+                    translated = await translator.TranslateAsync(text);
 
                 if (!result.IsDisposed && !result.Disposing && translated != string.Empty)
                     result.Text = translated;
 
-                string html = GoogleWithWiki.search(text).Result;
+                string html = await GoogleWithWiki.search(text);
                 string plainText = Regex.Replace(html, "[。.]", "\n");
                 plainText = Regex.Replace(plainText, "<.*?>", string.Empty);
                 plainText = System.Net.WebUtility.HtmlDecode(plainText);
