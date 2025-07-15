@@ -30,36 +30,36 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.formWrapper = new System.Windows.Forms.SplitContainer();
             this.search = new System.Windows.Forms.TextBox();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.resultWrapper = new System.Windows.Forms.SplitContainer();
             this.result = new System.Windows.Forms.TextBox();
             this.webResult = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.formWrapper)).BeginInit();
+            this.formWrapper.Panel1.SuspendLayout();
+            this.formWrapper.Panel2.SuspendLayout();
+            this.formWrapper.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.resultWrapper)).BeginInit();
+            this.resultWrapper.Panel1.SuspendLayout();
+            this.resultWrapper.Panel2.SuspendLayout();
+            this.resultWrapper.SuspendLayout();
             this.SuspendLayout();
             // 
-            // splitContainer2
+            // formWrapper
             // 
-            resources.ApplyResources(this.splitContainer2, "splitContainer2");
-            this.splitContainer2.Name = "splitContainer2";
+            resources.ApplyResources(this.formWrapper, "formWrapper");
+            this.formWrapper.Name = "formWrapper";
             // 
-            // splitContainer2.Panel1
+            // formWrapper.Panel1
             // 
-            resources.ApplyResources(this.splitContainer2.Panel1, "splitContainer2.Panel1");
-            this.splitContainer2.Panel1.Controls.Add(this.search);
+            resources.ApplyResources(this.formWrapper.Panel1, "formWrapper.Panel1");
+            this.formWrapper.Panel1.Controls.Add(this.search);
             // 
-            // splitContainer2.Panel2
+            // formWrapper.Panel2
             // 
-            resources.ApplyResources(this.splitContainer2.Panel2, "splitContainer2.Panel2");
-            this.splitContainer2.Panel2.Controls.Add(this.splitContainer1);
+            resources.ApplyResources(this.formWrapper.Panel2, "formWrapper.Panel2");
+            this.formWrapper.Panel2.Controls.Add(this.resultWrapper);
             // 
             // search
             // 
@@ -68,22 +68,22 @@
             this.search.TabStop = false;
             this.search.TextChanged += new System.EventHandler(this.search_TextChanged);
             // 
-            // splitContainer1
+            // resultWrapper
             // 
-            resources.ApplyResources(this.splitContainer1, "splitContainer1");
-            this.splitContainer1.BackColor = System.Drawing.SystemColors.Control;
-            this.splitContainer1.Name = "splitContainer1";
+            resources.ApplyResources(this.resultWrapper, "resultWrapper");
+            this.resultWrapper.BackColor = System.Drawing.SystemColors.Control;
+            this.resultWrapper.Name = "resultWrapper";
             // 
-            // splitContainer1.Panel1
+            // resultWrapper.Panel1
             // 
-            resources.ApplyResources(this.splitContainer1.Panel1, "splitContainer1.Panel1");
-            this.splitContainer1.Panel1.Controls.Add(this.result);
+            resources.ApplyResources(this.resultWrapper.Panel1, "resultWrapper.Panel1");
+            this.resultWrapper.Panel1.Controls.Add(this.result);
             // 
-            // splitContainer1.Panel2
+            // resultWrapper.Panel2
             // 
-            resources.ApplyResources(this.splitContainer1.Panel2, "splitContainer1.Panel2");
-            this.splitContainer1.Panel2.Controls.Add(this.webResult);
-            this.splitContainer1.TabStop = false;
+            resources.ApplyResources(this.resultWrapper.Panel2, "resultWrapper.Panel2");
+            this.resultWrapper.Panel2.Controls.Add(this.webResult);
+            this.resultWrapper.TabStop = false;
             // 
             // result
             // 
@@ -108,30 +108,31 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.Controls.Add(this.splitContainer2);
+            this.Controls.Add(this.formWrapper);
             this.Name = "Form1";
             this.Opacity = 0.8D;
             this.TopMost = true;
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel1.PerformLayout();
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.formWrapper.Panel1.ResumeLayout(false);
+            this.formWrapper.Panel1.PerformLayout();
+            this.formWrapper.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.formWrapper)).EndInit();
+            this.formWrapper.ResumeLayout(false);
+            this.resultWrapper.Panel1.ResumeLayout(false);
+            this.resultWrapper.Panel1.PerformLayout();
+            this.resultWrapper.Panel2.ResumeLayout(false);
+            this.resultWrapper.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.resultWrapper)).EndInit();
+            this.resultWrapper.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.SplitContainer formWrapper;
         private System.Windows.Forms.TextBox search;
-        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer resultWrapper;
         private System.Windows.Forms.TextBox result;
         private System.Windows.Forms.TextBox webResult;
     }

@@ -29,6 +29,7 @@ namespace win_util_tool
         public Form1(string text)
         {
             InitializeComponent();
+            this.Icon = Properties.Resources.Generate_an_icon_for;
 
             this.Shown += (s,e)=> { 
                 search.Text = text; 
@@ -120,6 +121,12 @@ namespace win_util_tool
             {
                 Environment.Exit(0); // アプリケーションを終了
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            formWrapper.SplitterDistance = formWrapper.Height / 4;
+            resultWrapper.SplitterDistance = resultWrapper.Width / 2;
         }
     }
 
