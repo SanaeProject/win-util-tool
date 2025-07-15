@@ -125,10 +125,24 @@ namespace win_util_tool
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            formWrapper.SplitterDistance = formWrapper.Height / 4;
-            resultWrapper.SplitterDistance = resultWrapper.Width / 2;
-        }
+            // インストール時にバグるため再設定
+            this.AutoScaleMode = AutoScaleMode.None;
+            this.Font = new Font("Meiryo", 14.0f);
+
+            formWrapper.Dock = DockStyle.Fill;
+            search.Dock = DockStyle.Fill;
+            resultWrapper.Dock = DockStyle.Fill;
+
+            formWrapper.Orientation = Orientation.Horizontal;
+            resultWrapper.Orientation = Orientation.Vertical;
+
+            formWrapper.SplitterDistance = formWrapper.Height / 5;
+            resultWrapper.SplitterDistance = resultWrapper.Width / 10 * 4;
+
+            result.Font = new Font("Consolas", 14.0f);
+            webResult.Font = new Font("Consolas", 14.0f);
     }
+}
 
     public static class Browser
     {

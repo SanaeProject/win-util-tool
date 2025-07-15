@@ -132,7 +132,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="search.Size" type="System.Drawing.Size, System.Drawing">
-    <value>498, 46</value>
+    <value>382, 100</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="search.TabIndex" type="System.Int32, mscorlib">
@@ -151,7 +151,7 @@
     <value>4, 5, 4, 5</value>
   </data>
   <data name="result.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 253</value>
+    <value>170, 269</value>
   </data>
   <data name="webResult.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
@@ -160,28 +160,28 @@
     <value>28, 29</value>
   </data>
   <data name="webResult.Size" type="System.Drawing.Size, System.Drawing">
-    <value>306, 253</value>
+    <value>210, 269</value>
   </data>
   <data name="resultWrapper.Size" type="System.Drawing.Size, System.Drawing">
-    <value>498, 253</value>
+    <value>382, 269</value>
   </data>
   <data name="resultWrapper.SplitterDistance" type="System.Int32, mscorlib">
-    <value>190</value>
+    <value>170</value>
   </data>
   <data name="resultWrapper.SplitterWidth" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="formWrapper.Size" type="System.Drawing.Size, System.Drawing">
-    <value>498, 303</value>
+    <value>382, 373</value>
   </data>
   <data name="formWrapper.SplitterDistance" type="System.Int32, mscorlib">
-    <value>46</value>
+    <value>100</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>12, 23</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>498, 303</value>
+    <value>382, 373</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>MS UI Gothic, 14pt</value>
