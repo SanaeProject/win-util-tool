@@ -22,7 +22,7 @@ namespace win_util_tool
     public partial class Form1 : Form
     {
         public static readonly HttpClient client      = new HttpClient();
-        private static readonly Translator translator  = new Translator(client);
+        private static readonly Translator translator = new Translator(client);
         // private static readonly Wiktionary wikitionary = new Wiktionary(client);
         private string searchUrl = "https://www.google.com/search?q=";
 
@@ -118,38 +118,61 @@ namespace win_util_tool
             }
             else if (e.KeyCode == Keys.Delete)
             {
-                // Escキーでアプリケーションを終了
-                Application.Exit();
+                Environment.Exit(0); // アプリケーションを終了
             }
         }
     }
 
     public static class Browser
     {
-        private static OpenQA.Selenium.IWebDriver driver = CreateDriver();
-        private static readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+        private static OpenQA.Selenium.IWebDriver driver;
+        private static readonly SemaphoreSlim semaphore  = new SemaphoreSlim(1, 1);
+
+        public static OpenQA.Selenium.IWebDriver Driver
+        {
+            get
+            {
+                if (driver == null)
+                {
+                    driver = CreateDriver();
+                }
+                return driver;
+            }
+        }
 
         private static OpenQA.Selenium.IWebDriver CreateDriver()
         {
-            var service = ChromeDriverService.CreateDefaultService();
-            service.HideCommandPromptWindow = true;
+            try
+            {
+                var service = ChromeDriverService.CreateDefaultService();
+                service.HideCommandPromptWindow = true;
 
-            var options = new ChromeOptions();
-            options.AddArgument("--headless");
-            options.AddArgument("--disable-gpu");
-            options.AddArgument("--no-sandbox");
+                var options = new ChromeOptions();
+                options.AddArgument("--headless");
+                options.AddArgument("--disable-gpu");
+                options.AddArgument("--no-sandbox");
 
-            options.AddArgument("--disable-blink-features=AutomationControlled");
-            options.AddExcludedArgument("enable-automation");
-            options.AddArgument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
+                options.AddArgument("--disable-blink-features=AutomationControlled");
+                options.AddExcludedArgument("enable-automation");
+                options.AddArgument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
 
-            return new ChromeDriver(service,options);
+                return new ChromeDriver(service, options);
+            }
+            catch (Exception ex)
+            {
+                if (MessageBox.Show($"ブラウザの起動に失敗しました。\r\n{ex.Message}\r\n再試行しますか？", "エラー", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.No)
+                {
+                    Environment.Exit(1); // アプリケーションを終了
+                }
+
+                return CreateDriver(); // 再帰的に再試行
+            }
         }
 
         public static string GetHtml(string url)
         {
-            driver.Navigate().GoToUrl(url);
-            return driver.PageSource;
+            Driver.Navigate().GoToUrl(url);
+            return Driver.PageSource;
         }
 
         public static async Task<string> GetHtmlWithWait(string url, int waitTime = 3000)
@@ -158,9 +181,9 @@ namespace win_util_tool
 
             try
             {
-                driver.Navigate().GoToUrl(url);
+                Driver.Navigate().GoToUrl(url);
                 await Task.Delay(waitTime);
-                return driver.PageSource;
+                return Driver.PageSource;
             }
             finally
             {
@@ -174,7 +197,7 @@ namespace win_util_tool
 
             try
             {
-                driver.Navigate().GoToUrl(url);
+                Driver.Navigate().GoToUrl(url);
 
                 OpenQA.Selenium.IWebElement element = null;
 
@@ -182,7 +205,7 @@ namespace win_util_tool
                 {
                     try
                     {
-                        element = driver.FindElement(OpenQA.Selenium.By.XPath(xpath));
+                        element = Driver.FindElement(OpenQA.Selenium.By.XPath(xpath));
                         if (element != null)
                             break;
                     }
@@ -208,7 +231,7 @@ namespace win_util_tool
 
             try
             {
-                driver.Navigate().GoToUrl(url);
+                Driver.Navigate().GoToUrl(url);
 
                 IReadOnlyCollection<OpenQA.Selenium.IWebElement> elements = null;
 
@@ -216,7 +239,7 @@ namespace win_util_tool
                 {
                     try
                     {
-                        elements = driver.FindElements(OpenQA.Selenium.By.XPath(xpath));
+                        elements = Driver.FindElements(OpenQA.Selenium.By.XPath(xpath));
                         if (elements != null && elements.Count > 0)
                             break;
                     }
