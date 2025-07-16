@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_137FFFFE7EA74BAC82561442DA98FEDD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_1C1E0C97527DC21F3C620988D63EA424"
         "OwnerKey" = "8:_A683D78C15ED6383430D374C7F5EBE96"
         "MsmSig" = "8:_UNDEFINED"
@@ -35,6 +41,12 @@
         {
         "MsmKey" = "8:_1C1E0C97527DC21F3C620988D63EA424"
         "OwnerKey" = "8:_895455C0B63ED4B3D076EDC435F3F5D2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1D321DD8B64A4CA7B59B73D4981BF2CD"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -70,6 +82,12 @@
         "Entry"
         {
         "MsmKey" = "8:_3D086DA9A3594E409974548829FC2668"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4414EB9CDFB4417AAF50EBE0CDE04654"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -113,6 +131,12 @@
         {
         "MsmKey" = "8:_895455C0B63ED4B3D076EDC435F3F5D2"
         "OwnerKey" = "8:_3D086DA9A3594E409974548829FC2668"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_99FCD3E887034DBE9B3F17141D2C5333"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -261,6 +285,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_D515DE39F0E5A1272425D4310D430ACD"
+        "OwnerKey" = "8:_3D086DA9A3594E409974548829FC2668"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D5D11ADBD4AB4FA4BF7BCA135349C5B0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -310,13 +340,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AAC69A2B5E83853909F87A6EED374DE0"
+        "OwnerKey" = "8:_3D086DA9A3594E409974548829FC2668"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3D086DA9A3594E409974548829FC2668"
+        "OwnerKey" = "8:_D515DE39F0E5A1272425D4310D430ACD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -415,6 +445,12 @@
         "OwnerKey" = "8:_5BB10B95E23197D1D194A1616CBE7132"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_AAC69A2B5E83853909F87A6EED374DE0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -433,6 +469,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -449,6 +501,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -509,6 +577,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_137FFFFE7EA74BAC82561442DA98FEDD"
+            {
+            "SourcePath" = "8:..\\win-util-tool\\packages\\Tesseract.5.2.0\\x64\\tesseract50.dll"
+            "TargetName" = "8:tesseract50.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_5C3F7F5719314821805EB81826A93670"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1C1E0C97527DC21F3C620988D63EA424"
             {
             "AssemblyRegister" = "3:1"
@@ -538,6 +626,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1D321DD8B64A4CA7B59B73D4981BF2CD"
+            {
+            "SourcePath" = "8:..\\win-util-tool\\packages\\Tesseract.5.2.0\\x86\\tesseract50.dll"
+            "TargetName" = "8:tesseract50.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C4702396624D4D06985ED8D891758424"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_264AA559C00AADB1C8E8D52D879EC734"
@@ -600,6 +708,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4414EB9CDFB4417AAF50EBE0CDE04654"
+            {
+            "SourcePath" = "8:..\\win-util-tool\\packages\\Tesseract.5.2.0\\x86\\leptonica-1.82.0.dll"
+            "TargetName" = "8:leptonica-1.82.0.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C4702396624D4D06985ED8D891758424"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_456A641D4A8CB6A61FE18D620F70F038"
@@ -724,6 +852,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_99FCD3E887034DBE9B3F17141D2C5333"
+            {
+            "SourcePath" = "8:..\\win-util-tool\\packages\\Tesseract.5.2.0\\x64\\leptonica-1.82.0.dll"
+            "TargetName" = "8:leptonica-1.82.0.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_5C3F7F5719314821805EB81826A93670"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9F68E39F01728C12492AF30A323DAF29"
@@ -974,6 +1122,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D515DE39F0E5A1272425D4310D430ACD"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Tesseract, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_D515DE39F0E5A1272425D4310D430ACD"
+                    {
+                    "Name" = "8:Tesseract.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Tesseract.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3CD96CC02F3347A983808BE8A558E251"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D5D11ADBD4AB4FA4BF7BCA135349C5B0"
             {
             "SourcePath" = "8:..\\win-util-tool\\packages\\Selenium.WebDriver.4.34.0\\manager\\windows\\selenium-manager.exe"
@@ -1094,6 +1273,28 @@
                             }
                         }
                     }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_5C3F7F5719314821805EB81826A93670"
+                    {
+                    "Name" = "8:x64"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_31C5BFF97A844A29B556C7BF127050A5"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_C4702396624D4D06985ED8D891758424"
+                    {
+                    "Name" = "8:x86"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_A1B60D44BF4545AE8F268A644A955DAC"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_42D4F6D9B0FB4223B8D7176F70870435"
@@ -1135,7 +1336,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:win-util-tool"
         "ProductCode" = "8:{7B03B963-63AA-4790-B8DA-22AE4DB498B0}"
-        "PackageCode" = "8:{205D38FC-FB66-4781-B841-E0F241776D16}"
+        "PackageCode" = "8:{E0C005F8-3CFD-4C6A-8457-D50C47927BB5}"
         "UpgradeCode" = "8:{A7180999-9375-4B62-A11C-6FEEB97C329D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

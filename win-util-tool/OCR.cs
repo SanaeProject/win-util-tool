@@ -122,7 +122,7 @@ namespace win_util_tool
             }
             catch (Exception ex)
             {
-                return "エラー:" + ex.Message;
+                return "エラー:" + ex.Message + "\r\n" + ex.InnerException?.Message;
             }
         }
     }
