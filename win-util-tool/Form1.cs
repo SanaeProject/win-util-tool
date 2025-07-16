@@ -141,8 +141,8 @@ namespace win_util_tool
 
             result.Font = new Font("Consolas", 14.0f);
             webResult.Font = new Font("Consolas", 14.0f);
+        }
     }
-}
 
     public static class Browser
     {

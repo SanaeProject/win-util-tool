@@ -31,8 +31,11 @@ namespace win_util_tool
             this.WindowState     = FormWindowState.Minimized;
             this.Hide();
 
-            // Ctrl+Shift+S でWndProcが呼ばれる。
-            if (RegisterHotKey(this.Handle, HOTKEY_ID, MOD_CONTROL | MOD_SHIFT | MOD_NOREPEAT, (uint)Keys.C) == 0) {
+            // Ctrl+Shift+(C or S) でWndProcが呼ばれる。
+            if (
+                RegisterHotKey(this.Handle, HOTKEY_ID, MOD_CONTROL | MOD_SHIFT | MOD_NOREPEAT, (uint)Keys.C) == 0 ||
+                RegisterHotKey(this.Handle, HOTKEY_ID+1, MOD_CONTROL | MOD_SHIFT | MOD_NOREPEAT, (uint)Keys.S) == 0
+                ) {
                 MessageBox.Show("ホットキーの取得に失敗しました。","エラー",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 Application.Exit();
             }
@@ -54,6 +57,7 @@ namespace win_util_tool
 
         protected override void WndProc(ref Message m)
         {
+            // テキスト検索
             if (m.Msg == WM_HOTKEY && m.WParam.ToInt32() == HOTKEY_ID)
             {
                 Invoke((MethodInvoker)(async () => {
@@ -65,6 +69,17 @@ namespace win_util_tool
                     form.Activate();
                 }));
             }
+            // OCR
+            else if (m.Msg == WM_HOTKEY && m.WParam.ToInt32() == HOTKEY_ID + 1)
+            {
+                Invoke((MethodInvoker)(() =>
+                {
+                    var form = new OCR();
+                    form.Show();
+                    form.Activate();
+                }));
+            }
+
             base.WndProc(ref m);
         }
     }
