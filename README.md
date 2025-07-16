@@ -1,73 +1,88 @@
-# win-util-tool
+# 🛠 win-util-tool
 
-Windows環境で「選択したテキスト」に対して瞬時に操作できる便利ツールです。  
-翻訳・説明表示・検索など、ちょっとした調べ物や作業効率化をサポートします。
-
----
-
-## 主な機能
-
-- [x] **選択文字列の翻訳**（DeepL API 使用）
-- [x] **Wikipedia説明の取得**（Yahoo検索経由）
-- [x] **選択文字列のGoogle検索**
-- [x] **ホットキー起動：Ctrl + Shift + C**
-- [x] **OCR機能：Ctrl + Shift + S**
+Windows環境で「選択したテキスト」に瞬時に操作できる便利ツールです。
+翻訳、説明表示、検索など、ちょっとした調べ物や作業効率化をサポートします。
 
 ---
 
-## 詳細機能
+## 🔧 機能一覧
 
-### 選択文字列の翻訳
-
-- 選択中のテキストを **DeepL翻訳API** を使って翻訳。
-- 結果はポップアップウィンドウ左下のテキストボックスに表示。
-
-> [!NOTE]
-> 利用には DeepL API のキーが必要です。  
-> システム環境変数に `DEEPL_API_KEY` を設定してください。
+* ✅ 選択文字列の翻訳（DeepL API 使用）
+* ✅ Wikipedia説明の取得（Yahoo検索経由）
+* ✅ 選択文字列のGoogle検索
+* ✅ ホットキー起動（`Ctrl + Shift + C`）
+* ✅ OCR機能（`Ctrl + Shift + S`）
 
 ---
 
-### Wikipedia説明の表示
+## ⚠ 開発環境の注意
 
-- 選択文字列を Yahoo検索（`site:wikipedia.org`）で検索。
-- 検索結果の `.sw-Card__summary` を抽出し、**最大5件**の説明文を取得。
-- ポップアップ右下のテキストボックスに表示。
+Visual Studio で開く際は、以下の拡張機能が必要です：
 
-検索URL形式：  
-`https://search.yahoo.co.jp/search?p=検索文字列 site:wikipedia.org`
+> `Visual Studio Installer Projects`
 
 ---
 
-### 選択文字列のGoogle検索
+## 🧠 各機能の詳細
 
-- ポップアップ左下のテキストボックスで `Enter` を押すと、Google検索ページが起動。
-- ポップアップウィンドウは自動的に閉じます。
+### 🔤 選択文字列の翻訳
 
----
+* 選択中のテキストを **DeepL API** により翻訳。
+* 結果はポップアップウィンドウ左下に表示。
 
-### OCR機能
-
-- ホットキー： `Ctrl + Shift + S`
-  -> 選択した範囲を文字起こしし検索します。
-> [!NOTE]
-> 利用には ['tessdata'](https://github.com/tesseract-ocr/tessdata) 若しくは ['tessdata_best'](https://github.com/tesseract-ocr/tessdata_best) をクローンしてください。
-> システム環境変数に `TESSDATA_PATH`　にクローンしたパスを設定してください。
+⚙ 設定：
+システム環境変数 `DEEPL_API_KEY` に APIキーを設定してください。
 
 ---
 
-## 操作方法
+### 📘 Wikipedia説明の取得
 
-- ホットキー： `Ctrl + Shift + C`  
-  -> クリップボードの情報が検索されます。
-  
+* Yahoo検索で `site:wikipedia.org` を指定し検索。
+* 検索結果 `.sw-Card__summary` から最大5件の説明文を抽出。
+* 結果はポップアップ右下に表示。
+
+🔎 検索URL例：
+
+```
+https://search.yahoo.co.jp/search?p=検索文字列 site:wikipedia.org
+```
+
 ---
 
-## 備考
+### 🔎 Google検索起動
 
-- このツールは .NET Framework 4.7.2 対応  
-- 使用ライブラリ一覧は [`packages.config`](./win-util-tool/packages.config) を参照してください
-- 初回実行時は `NuGet パッケージの復元` を行ってください
+* ポップアップ左下の入力ボックスで `Enter` を押すとGoogle検索を実行。
+* ウィンドウは自動的に閉じられます。
+
+---
+
+### 🖼 OCR機能
+
+* ホットキー： `Ctrl + Shift + S`
+* 選択範囲をキャプチャし、画像から文字を抽出 → 検索。
+
+⚙ 設定：
+
+1. [`tessdata`](https://github.com/tesseract-ocr/tessdata) または [`tessdata_best`](https://github.com/tesseract-ocr/tessdata_best) をクローン。
+2. システム環境変数 `TESSDATA_PATH` にパスを設定。
+
+---
+
+## ⌨ 操作方法まとめ
+
+| 機能     | ホットキー              | 説明               |
+| ------ | ------------------ | ---------------- |
+| テキスト処理 | `Ctrl + Shift + C` | クリップボードの内容を翻訳・検索 |
+| OCR処理  | `Ctrl + Shift + S` | 選択範囲から文字起こし・検索   |
+
+---
+
+## 📝 備考
+
+* .NET Framework 4.7.2 対応
+* 依存ライブラリ一覧：[`packages.config`](./win-util-tool/packages.config)
+* 初回ビルド前に NuGet パッケージの復元を行ってください：
 
 ```bash
 nuget restore
+```
