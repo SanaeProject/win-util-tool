@@ -11,7 +11,7 @@ Windows環境で「選択したテキスト」に対して瞬時に操作でき�
 - [x] **Wikipedia説明の取得**（Yahoo検索経由）
 - [x] **選択文字列のGoogle検索**
 - [x] **ホットキー起動：Ctrl + Shift + C**
-- [ ] **OCR機能**（開発予定）
+- [x] **OCR機能：Ctrl + Shift + S**
 
 ---
 
@@ -46,18 +46,21 @@ Windows環境で「選択したテキスト」に対して瞬時に操作でき�
 
 ---
 
-## 操作方法
+### OCR機能
 
-- ホットキー： `Ctrl + Shift + C`  
-  -> 選択中の文字列に対して機能が起動します
+- ホットキー： `Ctrl + Shift + S`
+  -> 選択した範囲を文字起こしし検索します。
+> [!NOTE]
+> 利用には ['tessdata'](https://github.com/tesseract-ocr/tessdata) 若しくは ['tessdata_best'](https://github.com/tesseract-ocr/tessdata_best) をクローンしてください。
+> システム環境変数に `TESSDATA_PATH`　にクローンしたパスを設定してください。
 
 ---
 
-## 今後の予定（ToDo）
+## 操作方法
 
-- [ ] **OCR機能の追加**  
-  -> スクリーン上の文字を直接取得して翻訳・検索可能にする予定です
-
+- ホットキー： `Ctrl + Shift + C`  
+  -> クリップボードの情報が検索されます。
+  
 ---
 
 ## 備考
